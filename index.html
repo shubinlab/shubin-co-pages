@@ -161,6 +161,23 @@
           this.field = new Float32Array(0);
           this.resize();
         }
+        buildCardCanvas(dpr) {
+          const canvas = document.createElement('canvas');
+          canvas.width = Math.ceil(CARD.width * this.cell.w * dpr);
+          canvas.height = Math.ceil(CARD.height * this.cell.h * dpr);
+          const ctx = canvas.getContext('2d');
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+          ctx.font = `${this.fontSize}px "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace`;
+          ctx.textBaseline = 'top';
+          ctx.textAlign = 'center';
+          ctx.fillStyle = '#d0f8d0';
+          for (let y = 0; y < CARD.height; y++) {
+            for (let x = 0; x < CARD.width; x++) {
+              ctx.fillText(CARD.lines[y][x], (x + 0.5) * this.cell.w, y * this.cell.h);
+            }
+          }
+          this.cardCanvas = canvas;
+        }
 
         setFontSize(px) {
           this.fontSize = px;
@@ -171,8 +188,7 @@
         resize() {
           const W = window.innerWidth;
           const H = window.innerHeight;
-          const minCols = Math.max(40, Math.min(80, Math.floor(W / 6.5)));
-          const targetCols = Math.max(minCols, Math.min(200, Math.floor(W / this.baseCellWidth)));
+          const targetCols = Math.max(40, Math.min(200, Math.floor(W / this.baseCellWidth)));
           const colWidth = W / targetCols;
           const scale = colWidth / this.baseCellWidth;
           const newFontSize = Math.max(8, Math.min(18, Math.floor(12 * scale)));
@@ -192,6 +208,7 @@
           this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
           this.ctx.font = `${newFontSize}px "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace`;
           this.ctx.textBaseline = 'top';
+          this.buildCardCanvas(dpr);
         }
 
         renderFromScalar(field, cols, rows, charset, color, options = {}) {
@@ -221,7 +238,7 @@
             for (let x = 0; x < cols; x++) {
               const cardX = x - cardStartX;
               if (cardFits && cardY >= 0 && cardY < card.height && cardX >= 0 && cardX < card.width) {
-                line += card.lines[cardY][cardX];
+                line += ' ';
                 continue;
               }
               let v = field[offset + x] * contrast + bias;
@@ -241,6 +258,15 @@
               line += charset[idx];
             }
             ctx.fillText(line, 0, y * cell.h);
+          }
+          if (cardFits) {
+            ctx.drawImage(
+              this.cardCanvas,
+              cardStartX * cell.w,
+              cardStartY * cell.h,
+              card.width * cell.w,
+              card.height * cell.h
+            );
           }
           updateCardOverlayPosition(this);
         }
