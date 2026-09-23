@@ -203,6 +203,7 @@
           const cardStartX = cardFits ? Math.floor((cols - card.width) / 2) : 0;
           const cardStartY = cardFits ? Math.floor((rows - card.height) / 2) : 0;
           this.cardPlacement = cardFits ? { startX: cardStartX, startY: cardStartY, width: card.width, height: card.height } : null;
+          this.hasVisiblePixels = false;
           const ctx = this.ctx;
           const cell = this.cell;
           ctx.fillStyle = '#000';
@@ -232,6 +233,7 @@
               } else {
                 idx = Math.max(0, Math.min(n, Math.floor(mapped * n + 0.5)));
               }
+              if (idx > 0) this.hasVisiblePixels = true;
               line += charset[idx];
             }
             ctx.fillText(line, 0, y * cell.h);
@@ -484,7 +486,6 @@
       const effect = {
         background: '#000',
         color: '#d0f8d0',
-        maxDensity: 1,
         update(t, dt) {
           const N = fluid.nx, M = fluid.ny;
           const cx = N * 0.5, cy = M * 0.5;
@@ -497,15 +498,12 @@
               fluid.addVelocity(i, j, fx, fy);
             }
           }
-          let maxDensity = 0;
           for (let y = 1; y <= M; y++) {
             for (let x = 1; x <= N; x++) {
               const k = fluid.IX(x, y);
-              const density = fluid.d[k] *= DISSIPATION;
-              if (density > maxDensity) maxDensity = density;
+              fluid.d[k] *= DISSIPATION;
             }
           }
-          this.maxDensity = maxDensity;
         },
         render() {
           const cols = renderer.cols, rows = renderer.rows;
@@ -850,8 +848,12 @@
             effect.render();
           }
         }
-        // Values below the first visible charset step rasterize as blank; stop until input.
-        const active = webcam.active || autoMotion.length > 0 || input.down || effect.maxDensity > 0.06;
+        const active = webcam.active || autoMotion.length > 0 || input.down || renderer.hasVisiblePixels;
+        if (!active && !webcam.active) {
+          fluid.d.fill(0);
+          fluid.Vx.fill(0);
+          fluid.Vy.fill(0);
+        }
         if (active) scheduleFrame();
       }
 
