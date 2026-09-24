@@ -20,11 +20,13 @@
     <meta property="og:site_name" content="Yuri Shubin" />
     <meta property="og:locale" content="en_US" />
     <meta property="og:locale:alternate" content="ru_RU" />
-    <meta property="og:image" content="https://shubin.co/og-card.png" />
+    <meta property="og:image" content="https://shubin.co/og-card.png?v=2" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Yuri Shubin — technology and AI products profile card" />
-    <meta name="twitter:image" content="https://shubin.co/og-card.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:alt" content="Portrait of Yuri Shubin — technology entrepreneur." />
+    <meta name="twitter:image" content="https://shubin.co/og-card.png?v=2" />
+    <meta name="twitter:image:alt" content="Portrait of Yuri Shubin — technology entrepreneur." />
     <meta name="twitter:title" content="Yuri Shubin — Technology &amp; AI Products" />
     <meta name="twitter:description" content="Technology entrepreneur focused on digitalization of complex manufacturing processes." />
     <title>Yuri Shubin — Technology &amp; AI Products</title>
@@ -938,7 +940,7 @@
           descriptionMeta: 'Yuri Shubin — technology entrepreneur focused on digitalization of complex manufacturing processes. Selected work and contact details.',
           ogLocale: 'en_US',
           ogDescription: 'Technology entrepreneur focused on digitalization of complex manufacturing processes.',
-          ogImageAlt: 'Yuri Shubin — technology and AI products profile card',
+          ogImageAlt: 'Portrait of Yuri Shubin — technology entrepreneur.',
           shareTitle: 'Yuri Shubin — contact card',
           shareText: 'Contact card for Yuri Shubin.',
         },
@@ -967,7 +969,7 @@
           descriptionMeta: 'Юрий Шубин — технологический предприниматель. Цифровизация сложных производственных процессов. Контакты и избранная работа.',
           ogLocale: 'ru_RU',
           ogDescription: 'Юрий Шубин — технологический предприниматель. Цифровизация сложных производственных процессов.',
-          ogImageAlt: 'Профиль Юрия Шубина — технологии и ИИ продукты',
+          ogImageAlt: 'Портрет Юрия Шубина — технологический предприниматель.',
           shareTitle: 'Контактная карточка Юрия Шубина',
           shareText: 'Контакты Юрия Шубина.',
         },
@@ -1021,6 +1023,7 @@
         document.querySelector('meta[property="og:locale"]').content = copy.ogLocale;
         document.querySelector('meta[property="og:locale:alternate"]').content = language === 'en' ? 'ru_RU' : 'en_US';
         document.querySelector('meta[property="og:image:alt"]').content = copy.ogImageAlt;
+        document.querySelector('meta[name="twitter:image:alt"]').content = copy.ogImageAlt;
         syncMotionToggle();
       }
 
