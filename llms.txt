@@ -2,7 +2,11 @@
 
 > Technology entrepreneur focused on digitalization of complex manufacturing processes.
 
-This is the canonical profile. Page copy is available in English and Russian. `llms.txt` is an optional, non-standard discovery aid; it does not control crawling or guarantee indexing.
+This is the primary English profile. Russian profile: https://shubin.co/ru/. `llms.txt` is an optional, non-standard discovery aid; it does not control crawling or guarantee indexing.
+
+## Languages
+- [English](https://shubin.co/)
+- [Русский](https://shubin.co/ru/)
 
 ## Contact
 - [Email](mailto:hello@shubin.co)
