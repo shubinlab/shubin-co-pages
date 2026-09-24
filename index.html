@@ -31,7 +31,6 @@
       :root {
         color-scheme: dark;
         --bg: #050907;
-        --panel: rgba(9, 16, 13, 0.50);
         --panel-edge: rgba(182, 230, 194, 0.22);
         --text: #eaf3ec;
         --muted: #aab8ae;
@@ -87,7 +86,7 @@
         padding: clamp(20px, 3vw, 36px);
         border: 1px solid var(--panel-edge);
         border-radius: 20px;
-        background: var(--panel);
+        background: rgba(9, 16, 13, 0.94);
         box-shadow: 0 24px 90px rgba(0, 0, 0, 0.48), 0 0 60px rgba(100, 190, 125, 0.06);
         backdrop-filter: blur(1px);
 
@@ -96,12 +95,17 @@
       .identity {
         display: flex;
         align-items: center;
-        gap: 16px;
+        justify-content: space-between;
+        gap: 10px;
       }
       .language-toggle {
+        display: inline-flex;
         min-width: 44px;
         min-height: 44px;
-        margin-left: auto;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        padding: 0 8px;
         border: 1px solid var(--panel-edge);
         border-radius: 999px;
         background: transparent;
@@ -110,15 +114,35 @@
         cursor: pointer;
         touch-action: manipulation;
       }
+      .section-icon {
+        width: 14px;
+        height: 14px;
+        flex: 0 0 14px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.7;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      .profile-hero {
+        display: grid;
+        grid-template-columns: 96px minmax(0, 1fr);
+        align-items: center;
+        gap: 16px;
+        margin-top: 12px;
+      }
       .profile-photo {
         display: block;
-        flex: 0 0 64px;
-        width: 64px;
-        height: 64px;
+        width: 96px;
+        height: 96px;
         object-fit: cover;
         object-position: center 48%;
       }
+      .hero-copy { min-width: 0; }
       .eyebrow {
+        display: flex;
+        align-items: center;
+        gap: 7px;
         margin: 0;
         color: var(--accent);
         font: 600 11px/1.4 var(--mono);
@@ -126,23 +150,24 @@
         text-transform: uppercase;
       }
       h1 {
-        margin: 20px 0 4px;
-        font-size: clamp(32px, 6vw, 46px);
+        margin: 7px 0 4px;
+        font-size: clamp(30px, 3.4vw, 42px);
         font-weight: 600;
         letter-spacing: -0.055em;
-        line-height: 1.06;
+        line-height: 1.04;
       }
       .role {
         margin: 0;
         color: #d4e2d7;
-        font-size: clamp(15px, 2.5vw, 18px);
+        font-size: clamp(14px, 1.4vw, 16px);
         line-height: 1.4;
       }
       .intro {
-        max-width: 52ch;
-        margin: 16px 0 0;
+        max-width: 44ch;
+        margin: 8px 0 0;
         color: var(--muted);
-        font-size: 14px;
+        font-size: 13px;
+        line-height: 1.45;
       }
       .actions {
         display: grid;
@@ -185,8 +210,8 @@
       }
       .action:hover { border-color: var(--accent); }
       .featured {
-        margin-top: 30px;
-        padding-top: 24px;
+        margin-top: 24px;
+        padding-top: 20px;
         border-top: 1px solid var(--panel-edge);
       }
       .featured h2 {
@@ -232,10 +257,22 @@
         display: inline-flex;
         min-height: 44px;
         align-items: center;
+        gap: 7px;
         color: var(--muted);
         font-size: 14px;
         text-decoration: none;
       }
+      .profile-icon {
+        width: 15px;
+        height: 15px;
+        flex: 0 0 15px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.6;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      .github-icon { fill: currentColor; stroke: none; }
       .profiles a:hover { color: var(--text); }
       .profile-share {
         display: inline-flex;
@@ -262,6 +299,7 @@
         color: var(--muted);
         font: 12px/1.3 var(--mono);
         cursor: pointer;
+        gap: 7px;
         touch-action: manipulation;
       }
       .motion-toggle:hover { color: var(--text); }
@@ -271,6 +309,7 @@
         color: var(--muted);
         font-size: 13px;
       }
+      .status:empty { display: none; }
       @media (max-width: 520px) {
         .site {
           display: block;
@@ -292,14 +331,17 @@
         .footer-links { gap: 0 8px; }
         .profile-share { font-size: 11px; }
         .profiles { gap: 0 14px; }
-        .identity { gap: 12px; }
-        .profile-photo {
-          flex-basis: 56px;
-          width: 56px;
-          height: 56px;
+        .identity { gap: 8px; }
+        .profile-hero {
+          grid-template-columns: 72px minmax(0, 1fr);
+          align-items: start;
+          gap: 12px;
+          margin-top: 12px;
         }
-        h1 { margin-top: 14px; }
-        .intro { margin-top: 12px; font-size: 13px; }
+        .profile-photo { width: 72px; height: 72px; }
+        .hero-copy h1 { margin: 7px 0 4px; font-size: 26px; }
+        .hero-copy .role { font-size: 13px; line-height: 1.35; }
+        .hero-copy .intro { margin-top: 8px; font-size: 12px; line-height: 1.4; }
         .actions { margin-top: 18px; }
         .action { min-height: 44px; padding: 8px; font-size: 11px; }
         .featured { margin-top: 20px; padding-top: 16px; }
@@ -357,13 +399,23 @@
       <article class="profile-card" aria-labelledby="profile-name">
         <header>
           <div class="identity">
-            <img id="profile-photo" class="profile-photo" src="yuri-shubin-avatar.webp" alt="Portrait of Yuri Shubin" width="64" height="64" fetchpriority="high" decoding="async" />
-            <p class="eyebrow" id="brand-eyebrow">Technology · AI Products</p>
-            <button class="language-toggle" id="language-toggle" type="button" aria-label="Switch to Russian">RU</button>
+            <p class="eyebrow" id="brand-eyebrow">
+              <svg class="section-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="6" y="6" width="12" height="12" rx="2"></rect><path d="M9 2v4m6-4v4M9 18v4m6-4v4M2 9h4m-4 6h4m12-6h4m-4 6h4"></path></svg>
+              <span id="brand-label">Technology · AI Products</span>
+            </p>
+            <button class="language-toggle" id="language-toggle" type="button" aria-label="Switch to Russian">
+              <svg class="action-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18m-9-9a14 14 0 0 1 0 18m0-18a14 14 0 0 0 0 18"></path></svg>
+              <span id="language-code">RU</span>
+            </button>
           </div>
-          <h1 id="profile-name">Yuri Shubin</h1>
-          <p class="role" id="profile-role">Technology entrepreneur &amp; venture builder</p>
-          <p class="intro" id="profile-intro">Digitalization of complex manufacturing processes.</p>
+          <div class="profile-hero">
+            <img id="profile-photo" class="profile-photo" src="yuri-shubin-avatar.webp" alt="Portrait of Yuri Shubin" width="96" height="96" fetchpriority="high" decoding="async" />
+            <div class="hero-copy">
+              <h1 id="profile-name">Yuri Shubin</h1>
+              <p class="role" id="profile-role">Technology entrepreneur &amp; venture builder</p>
+              <p class="intro" id="profile-intro">Digitalization of complex manufacturing processes.</p>
+            </div>
+          </div>
         </header>
 
         <div class="actions" id="contact-actions" role="group" aria-label="Contact actions">
@@ -383,7 +435,10 @@
         <p class="status" id="share-status" role="status" aria-live="polite"></p>
 
         <section class="featured" aria-labelledby="featured-title">
-          <p class="eyebrow" id="featured-eyebrow">Selected product · Digital Atom</p>
+          <p class="eyebrow" id="featured-eyebrow">
+            <svg class="section-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="4" width="16" height="16" rx="2"></rect><path d="M8 8h8M8 12h5M8 16h8"></path></svg>
+            <span id="featured-label">Selected product · Digital Atom</span>
+          </p>
           <h2 id="featured-title">Digital Atom Simula</h2>
           <p id="featured-description">A scenario-based simulator for communications teams to practise media and crisis response.</p>
           <a class="proof-link" id="proof-link" href="https://www.atomic-energy.ru/news/2022/09/13/128153" target="_blank" rel="noopener noreferrer">Publication · 2022 ↗</a>
@@ -392,15 +447,24 @@
         <div class="footer-row">
           <div class="footer-links">
             <nav class="profiles" id="profile-nav" aria-label="Professional profiles">
-              <a href="https://www.linkedin.com/in/shhhubin/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-              <a href="https://github.com/shubinlab" target="_blank" rel="noopener noreferrer">GitHub</a>
+              <a href="https://www.linkedin.com/in/shhhubin/" target="_blank" rel="noopener noreferrer">
+                <svg class="profile-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M8 10v7m0-10h.01M12 17v-4a2 2 0 1 1 4 0v4m-4-7v7"></path></svg>
+                <span>LinkedIn</span>
+              </a>
+              <a href="https://github.com/shubinlab" target="_blank" rel="noopener noreferrer">
+                <svg class="profile-icon github-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3.2a8.8 8.8 0 0 0-2.8 17.1c.4.1.5-.2.5-.4v-1.6c-2.3.5-2.8-1-2.8-1-.4-.9-.9-1.2-.9-1.2-.7-.5.1-.5.1-.5.8.1 1.2.8 1.2.8.7 1.2 1.9.9 2.4.7.1-.5.3-.9.5-1.1-1.8-.2-3.7-.9-3.7-4a3 3 0 0 1 .8-2.1c-.1-.2-.4-1.1.1-2.2 0 0 .7-.2 2.3.8a8 8 0 0 1 4.2 0c1.6-1.1 2.3-.8 2.3-.8.5 1.1.2 2 .1 2.2.5.6.8 1.3.8 2.1 0 3.1-1.9 3.8-3.7 4 .3.2.6.7.6 1.4v2.1c0 .2.1.5.6.4A8.8 8.8 0 0 0 12 3.2Z"></path></svg>
+                <span>GitHub</span>
+              </a>
             </nav>
             <button class="profile-share" id="share-contact" type="button">
               <svg class="action-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><path d="m8.7 10.6 6.6-4.2m-6.6 7 6.6 4.2"></path></svg>
               <span id="share-contact-label">Share contact</span>
             </button>
           </div>
-          <button class="motion-toggle" id="motion-toggle" type="button" aria-pressed="false">Pause background animation</button>
+          <button class="motion-toggle" id="motion-toggle" type="button" aria-pressed="false">
+            <svg class="action-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path id="motion-pause-icon" d="M8 5v14m8-14v14"></path><path id="motion-play-icon" d="m9 6 9 6-9 6z" hidden></path></svg>
+            <span id="motion-toggle-label">Pause background animation</span>
+          </button>
         </div>
       </article>
     </main>
@@ -660,6 +724,7 @@
       function attachPointer(el) {
         el.addEventListener('pointerdown', (e) => {
           if (e.target.closest('.profile-card')) return;
+          if (paused && reducedMotion.matches) return;
           if (e.pointerType === 'touch') {
             if (paused) return;
             autoMotion = [];
@@ -871,9 +936,11 @@
       };
 
       function syncMotionToggle() {
-        motionToggle.textContent = paused
+        document.getElementById('motion-toggle-label').textContent = paused
           ? (language === 'ru' ? 'Включить анимацию' : 'Enable background animation')
           : (language === 'ru' ? 'Остановить анимацию' : 'Pause background animation');
+        document.getElementById('motion-pause-icon').hidden = paused;
+        document.getElementById('motion-play-icon').hidden = !paused;
         motionToggle.setAttribute('aria-pressed', String(!paused));
       }
 
@@ -881,7 +948,7 @@
         language = nextLanguage;
         document.documentElement.lang = language;
         const copy = languageCopy[language];
-        document.getElementById('brand-eyebrow').textContent = copy.brand;
+        document.getElementById('brand-label').textContent = copy.brand;
         document.getElementById('profile-name').textContent = copy.name;
         document.getElementById('profile-photo').alt = copy.photoAlt;
         document.getElementById('profile-role').textContent = copy.role;
@@ -891,11 +958,11 @@
         document.getElementById('telegram-action-label').textContent = copy.telegram;
         document.getElementById('contact-action-label').textContent = copy.contact;
         document.getElementById('share-contact-label').textContent = copy.share;
-        document.getElementById('featured-eyebrow').textContent = copy.selected;
+        document.getElementById('featured-label').textContent = copy.selected;
         document.getElementById('featured-description').textContent = copy.description;
         document.getElementById('proof-link').textContent = copy.proof;
         document.getElementById('profile-nav').setAttribute('aria-label', copy.nav);
-        languageToggle.textContent = language === 'en' ? 'RU' : 'EN';
+        document.getElementById('language-code').textContent = language === 'en' ? 'RU' : 'EN';
         languageToggle.setAttribute('aria-label', language === 'en' ? 'Switch to Russian' : 'Переключить на английский');
         document.title = copy.title;
         document.querySelector('meta[name="description"]').content = copy.descriptionMeta;
