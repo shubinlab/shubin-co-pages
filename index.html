@@ -11,16 +11,6 @@
     <link rel="alternate" hreflang="en" href="https://shubin.co/" />
     <link rel="alternate" hreflang="ru" href="https://shubin.co/ru/" />
     <link rel="alternate" hreflang="x-default" href="https://shubin.co/" />
-    <script>
-      (() => {
-        if (window.location.pathname !== '/') return;
-        try {
-          if (window.localStorage.getItem('shubin-language-choice') === 'ru') {
-            window.location.replace('/ru/' + window.location.search + window.location.hash);
-          }
-        } catch {}
-      })();
-    </script>
     <link rel="icon" href="/favicon.svg?v=2" type="image/svg+xml" sizes="any" />
     <link rel="icon" href="/favicon-32.png?v=2" type="image/png" sizes="32x32" />
     <link rel="icon" href="/favicon.ico?v=2" sizes="any" />

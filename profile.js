@@ -491,10 +491,12 @@
       function showLocaleSuggestion() {
         const suggestion = document.getElementById('locale-suggestion');
         if (!suggestion || language !== 'en' || window.location.pathname !== '/') return;
+        let savedChoice = '';
         try {
-          if (window.localStorage.getItem('shubin-language-choice')) return;
+          savedChoice = window.localStorage.getItem('shubin-language-choice') || '';
         } catch {}
-        if (preferredBrowserLanguage() !== 'ru') return;
+        if (savedChoice === 'en') return;
+        if (savedChoice !== 'ru' && preferredBrowserLanguage() !== 'ru') return;
         suggestion.hidden = false;
         document.getElementById('locale-suggestion-link').addEventListener(
           'click',
