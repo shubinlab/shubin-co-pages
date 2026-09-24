@@ -2,78 +2,408 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Yuri Shubin / technology entrepreneur & venture builder</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="description" content="Yuri Shubin — technology entrepreneur focused on digitalization of complex manufacturing processes. Selected work and contact details." />
+    <meta name="author" content="Yuri Shubin" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="theme-color" content="#050907" />
+    <link rel="canonical" href="https://shubin.co/" />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" sizes="any" />
+    <link rel="icon" href="favicon-32.png" type="image/png" sizes="32x32" />
+    <link rel="icon" href="favicon.ico" sizes="any" />
+    <meta property="og:type" content="profile" />
+    <meta property="og:title" content="Yuri Shubin — Technology &amp; AI Products" />
+    <meta property="og:description" content="Technology entrepreneur focused on digitalization of complex manufacturing processes." />
+    <meta property="og:url" content="https://shubin.co/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta property="og:site_name" content="Yuri Shubin" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="ru_RU" />
+    <meta property="og:image" content="https://shubin.co/og-card.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Yuri Shubin — technology and AI products profile card" />
+    <meta name="twitter:image" content="https://shubin.co/og-card.png" />
+    <meta name="twitter:title" content="Yuri Shubin — Technology &amp; AI Products" />
+    <meta name="twitter:description" content="Technology entrepreneur focused on digitalization of complex manufacturing processes." />
+    <title>Yuri Shubin — Technology &amp; AI Products</title>
     <style>
-      /* Reset and fullscreen */
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-        overflow: hidden; /* ensure no scrollbars */
-        background: black;
+      :root {
+        color-scheme: dark;
+        --bg: #050907;
+        --panel: rgba(9, 16, 13, 0.50);
+        --panel-edge: rgba(182, 230, 194, 0.22);
+        --text: #eaf3ec;
+        --muted: #aab8ae;
+        --accent: #bce8c8;
+        --accent-ink: #102116;
+        --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
       }
 
-      /* Container for ASCII */
+      * { box-sizing: border-box; }
+      html, body { min-height: 100%; margin: 0; background: var(--bg); }
+      body {
+        min-height: 100svh;
+        min-height: 100dvh;
+        color: var(--text);
+        font: 15px/1.55 var(--mono);
+        overflow-x: hidden;
+      }
+      a { color: inherit; }
+      a:focus-visible, button:focus-visible {
+        outline: 3px solid var(--accent);
+        outline-offset: 3px;
+      }
+
       #app {
         position: fixed;
         inset: 0;
-        width: 100vw;
-        height: 100vh;
-        height: 100dvh;
-        display: grid;
-        place-items: center;
-        background: #000;
-        color: #0f0;
-        user-select: none;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
+        z-index: 0;
+        background: var(--bg);
         cursor: crosshair;
-        /* Prevent page scroll/gestures interfering with drawing */
-        touch-action: none;
-        overscroll-behavior: none;
       }
-
       canvas.ascii {
         position: absolute;
         inset: 0;
         display: block;
         width: 100%;
         height: 100%;
-        touch-action: none;
+        opacity: 0.8;
+        pointer-events: none;
       }
 
-      #cardOverlay {
-        position: absolute;
+      .site {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        place-items: center;
+        min-height: 100svh;
+        min-height: 100dvh;
+        padding: clamp(16px, 3vw, 40px);
         pointer-events: none;
-        color: #d0f8d0;
-        font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-        font-size: 12px;
-        line-height: 1;
-        display: none;
       }
-      #cardOverlay a {
-        position: absolute;
-        text-decoration: underline;
-        color: inherit;
+      .profile-card {
+        width: min(100%, 560px);
+        padding: clamp(20px, 3vw, 36px);
+        border: 1px solid var(--panel-edge);
+        border-radius: 20px;
+        background: var(--panel);
+        box-shadow: 0 24px 90px rgba(0, 0, 0, 0.48), 0 0 60px rgba(100, 190, 125, 0.06);
+        backdrop-filter: blur(1px);
+
         pointer-events: auto;
       }
-      @media (pointer: coarse) {
-        #cardOverlay a {
-          min-width: 24px;
-          min-height: 24px;
-          touch-action: manipulation;
+      .identity {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+      .language-toggle {
+        min-width: 44px;
+        min-height: 44px;
+        margin-left: auto;
+        border: 1px solid var(--panel-edge);
+        border-radius: 999px;
+        background: transparent;
+        color: var(--accent);
+        font: 600 12px/1 var(--mono);
+        cursor: pointer;
+        touch-action: manipulation;
+      }
+      .profile-photo {
+        display: block;
+        flex: 0 0 64px;
+        width: 64px;
+        height: 64px;
+        object-fit: cover;
+        object-position: center 48%;
+      }
+      .eyebrow {
+        margin: 0;
+        color: var(--accent);
+        font: 600 11px/1.4 var(--mono);
+        letter-spacing: 0.13em;
+        text-transform: uppercase;
+      }
+      h1 {
+        margin: 20px 0 4px;
+        font-size: clamp(32px, 6vw, 46px);
+        font-weight: 600;
+        letter-spacing: -0.055em;
+        line-height: 1.06;
+      }
+      .role {
+        margin: 0;
+        color: #d4e2d7;
+        font-size: clamp(15px, 2.5vw, 18px);
+        line-height: 1.4;
+      }
+      .intro {
+        max-width: 52ch;
+        margin: 16px 0 0;
+        color: var(--muted);
+        font-size: 14px;
+      }
+      .actions {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+        margin-top: 24px;
+      }
+      .action {
+        display: inline-flex;
+        min-width: 44px;
+        min-height: 48px;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 10px 12px;
+        border: 1px solid rgba(188, 232, 200, 0.34);
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.035);
+        color: var(--text);
+        font: 600 12px/1.25 var(--mono);
+        text-align: center;
+        text-decoration: none;
+        cursor: pointer;
+        touch-action: manipulation;
+      }
+      .action-icon {
+        width: 16px;
+        height: 16px;
+        flex: 0 0 16px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.8;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      .action-primary {
+        border-color: var(--accent);
+        background: var(--accent);
+        color: var(--accent-ink);
+      }
+      .action:hover { border-color: var(--accent); }
+      .featured {
+        margin-top: 30px;
+        padding-top: 24px;
+        border-top: 1px solid var(--panel-edge);
+      }
+      .featured h2 {
+        margin: 8px 0 6px;
+        font-size: 20px;
+        font-weight: 550;
+        letter-spacing: -0.02em;
+      }
+      .featured p:not(.eyebrow) {
+        max-width: 58ch;
+        margin: 0;
+        color: var(--muted);
+        font-size: 15px;
+      }
+      .proof-link {
+        display: inline-flex;
+        min-height: 44px;
+        align-items: center;
+        margin-top: 8px;
+        color: var(--accent);
+        font-size: 14px;
+        text-decoration-thickness: 1px;
+        text-underline-offset: 4px;
+      }
+      .footer-row {
+        display: grid;
+        gap: 6px;
+        margin-top: 16px;
+      }
+      .footer-links {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 4px 12px;
+      }
+      .profiles {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px 16px;
+      }
+      .profiles a {
+        display: inline-flex;
+        min-height: 44px;
+        align-items: center;
+        color: var(--muted);
+        font-size: 14px;
+        text-decoration: none;
+      }
+      .profiles a:hover { color: var(--text); }
+      .profile-share {
+        display: inline-flex;
+        min-height: 44px;
+        align-items: center;
+        gap: 7px;
+        padding: 8px 0;
+        border: 0;
+        background: transparent;
+        color: var(--accent);
+        font: 12px/1.3 var(--mono);
+        cursor: pointer;
+        touch-action: manipulation;
+      }
+      .profile-share:hover { color: var(--text); }
+      .motion-toggle {
+        display: inline-flex;
+        min-height: 44px;
+        align-items: center;
+        justify-self: end;
+        padding: 8px 10px;
+        border: 0;
+        background: transparent;
+        color: var(--muted);
+        font: 12px/1.3 var(--mono);
+        cursor: pointer;
+        touch-action: manipulation;
+      }
+      .motion-toggle:hover { color: var(--text); }
+      .status {
+        min-height: 1.4em;
+        margin: 4px 0 0;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      @media (max-width: 520px) {
+        .site {
+          display: block;
+          padding: 16px 12px;
         }
+        .profile-card {
+          width: 100%;
+          max-width: 340px;
+          margin: 0 auto 16px;
+          padding: 20px 18px;
+          border-radius: 16px;
+        }
+        .actions {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 8px;
+        }
+        .action-primary { grid-column: 1 / -1; }
+        .footer-row { align-items: flex-start; }
+        .footer-links { gap: 0 8px; }
+        .profile-share { font-size: 11px; }
+        .profiles { gap: 0 14px; }
+        .identity { gap: 12px; }
+        .profile-photo {
+          flex-basis: 56px;
+          width: 56px;
+          height: 56px;
+        }
+        h1 { margin-top: 14px; }
+        .intro { margin-top: 12px; font-size: 13px; }
+        .actions { margin-top: 18px; }
+        .action { min-height: 44px; padding: 8px; font-size: 11px; }
+        .featured { margin-top: 20px; padding-top: 16px; }
+        .featured h2 { margin: 6px 0 4px; font-size: 18px; }
+        .featured p:not(.eyebrow) { font-size: 13px; line-height: 1.45; }
+        .proof-link { min-height: 40px; margin-top: 4px; }
+        .footer-row { gap: 8px 10px; margin-top: 12px; }
+        .profiles { gap: 0 10px; }
+        .profiles a { min-height: 40px; font-size: 12px; }
+        .motion-toggle { min-height: 40px; padding: 6px 8px; font-size: 11px; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { scroll-behavior: auto !important; }
       }
     </style>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "@id": "https://shubin.co/#person",
+        "name": "Yuri Shubin",
+        "alternateName": "Юрий Шубин",
+        "url": "https://shubin.co/",
+        "jobTitle": "Technology entrepreneur and venture builder",
+        "description": "Digitalization of complex manufacturing processes.",
+        "image": "https://shubin.co/yuri-shubin-avatar.webp",
+        "email": "hello@shubin.co",
+        "sameAs": [
+          "https://www.linkedin.com/in/shhhubin/",
+          "https://github.com/shubinlab",
+          "https://t.me/shubin",
+          "https://www.tadviser.ru/index.php/%D0%9F%D0%B5%D1%80%D1%81%D0%BE%D0%BD%D0%B0:%D0%A8%D1%83%D0%B1%D0%B8%D0%BD_%D0%AE%D1%80%D0%B8%D0%B9_%D0%9E%D0%BB%D0%B5%D0%B3%D0%BE%D0%B2%D0%B8%D1%87",
+          "https://www.tadviser.ru/a/506476"
+        ],
+        "subjectOf": [
+          {
+            "@type": "CreativeWork",
+            "name": "Kazan Digital Week 2024 speaker program",
+            "url": "https://kazandigitalweek.com/upload/doc/results/2024/program_2024_speakers.pdf"
+          },
+          {
+            "@type": "CreativeWork",
+            "name": "Digital Atom Simula publication",
+            "url": "https://www.atomic-energy.ru/news/2022/09/13/128153"
+          }
+        ]
+      }
+    </script>
   </head>
   <body>
-    <div id="app">
-      <canvas id="ascii" class="ascii" aria-hidden="true"></canvas>
-      <div id="cardOverlay" role="group" aria-label="Business card links"></div>
-      <!-- Business card glyphs are rendered directly within the ASCII grid -->
+    <div id="app" aria-hidden="true">
+      <canvas id="ascii" class="ascii"></canvas>
     </div>
+    <main class="site">
+      <article class="profile-card" aria-labelledby="profile-name">
+        <header>
+          <div class="identity">
+            <img id="profile-photo" class="profile-photo" src="yuri-shubin-avatar.webp" alt="Portrait of Yuri Shubin" width="64" height="64" fetchpriority="high" decoding="async" />
+            <p class="eyebrow" id="brand-eyebrow">Technology · AI Products</p>
+            <button class="language-toggle" id="language-toggle" type="button" aria-label="Switch to Russian">RU</button>
+          </div>
+          <h1 id="profile-name">Yuri Shubin</h1>
+          <p class="role" id="profile-role">Technology entrepreneur &amp; venture builder</p>
+          <p class="intro" id="profile-intro">Digitalization of complex manufacturing processes.</p>
+        </header>
+
+        <div class="actions" id="contact-actions" role="group" aria-label="Contact actions">
+          <a class="action action-primary" id="email-action" href="mailto:hello@shubin.co">
+            <svg class="action-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="m4 7 8 6 8-6"></path></svg>
+            <span id="email-action-label">Email</span>
+          </a>
+          <a class="action" id="telegram-action" href="https://t.me/shubin" target="_blank" rel="noopener noreferrer">
+            <svg class="action-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="m21 3-3.5 18-6.1-4.7-3.2 3 .5-5.6L21 3ZM8.2 13.7 21 3 3 10.6l5.2 2.1"></path></svg>
+            <span id="telegram-action-label">Telegram</span>
+          </a>
+          <a class="action" id="contact-action" href="yuri-shubin.vcf" download="Yuri-Shubin.vcf">
+            <svg class="action-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="16" rx="2"></rect><circle cx="8" cy="10" r="2"></circle><path d="M5.5 16c.5-2 5-2 5.5 0M13 9h5M13 13h5M13 17h5"></path></svg>
+            <span id="contact-action-label">Save contact</span>
+          </a>
+        </div>
+        <p class="status" id="share-status" role="status" aria-live="polite"></p>
+
+        <section class="featured" aria-labelledby="featured-title">
+          <p class="eyebrow" id="featured-eyebrow">Selected product · Digital Atom</p>
+          <h2 id="featured-title">Digital Atom Simula</h2>
+          <p id="featured-description">A scenario-based simulator for communications teams to practise media and crisis response.</p>
+          <a class="proof-link" id="proof-link" href="https://www.atomic-energy.ru/news/2022/09/13/128153" target="_blank" rel="noopener noreferrer">Publication · 2022 ↗</a>
+        </section>
+
+        <div class="footer-row">
+          <div class="footer-links">
+            <nav class="profiles" id="profile-nav" aria-label="Professional profiles">
+              <a href="https://www.linkedin.com/in/shhhubin/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+              <a href="https://github.com/shubinlab" target="_blank" rel="noopener noreferrer">GitHub</a>
+            </nav>
+            <button class="profile-share" id="share-contact" type="button">
+              <svg class="action-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><path d="m8.7 10.6 6.6-4.2m-6.6 7 6.6 4.2"></path></svg>
+              <span id="share-contact-label">Share contact</span>
+            </button>
+          </div>
+          <button class="motion-toggle" id="motion-toggle" type="button" aria-pressed="false">Pause background animation</button>
+        </div>
+      </article>
+    </main>
 
     <script>
       // Utility: measure monospace character cell
@@ -99,53 +429,6 @@
         15, 7, 13, 5,
       ].map(v => v / 16 - 0.5));
 
-      const CARD_LINES = [
-        '┌──────────────────────────────────┐',
-        '│                                  │',
-        '│ YURI SHUBIN                      │',
-        '│ technology entrepreneur          │',
-        '│ venture builder                  │',
-        '│                                  │',
-        '│__________________________________│',
-        '│                                  │',
-        '│ Email / Telegram / LinkedIn / Fb │',
-        '│                                  │',
-        '└──────────────────────────────────┘',
-      ];
-      const CARD = {
-        lines: CARD_LINES,
-        width: CARD_LINES[0].length,
-        height: CARD_LINES.length,
-      };
-      function makeLink(lineIndex, text, url) {
-        const line = CARD.lines[lineIndex];
-        if (!line) return null;
-        const start = line.indexOf(text);
-        if (start < 0) return null;
-        return {
-          url,
-          line: lineIndex,
-          start,
-          length: text.length,
-          text,
-        };
-      }
-
-      const CARD_NAME = (() => {
-        const lineIndex = 2;
-        const text = 'YURI SHUBIN';
-        const line = CARD.lines[lineIndex];
-        const start = line.indexOf(text);
-        if (start < 0) return null;
-        return { line: lineIndex, start, length: text.length, text };
-      })();
-
-      CARD.links = [
-        makeLink(8, 'Email', 'mailto:hello@shubin.co'),
-        makeLink(8, 'Telegram', 'https://shubin.t.me'),
-        makeLink(8, 'LinkedIn', 'https://www.linkedin.com/in/shhhubin/'),
-        makeLink(8, 'Fb', 'https://www.facebook.com/shhhubin'),
-      ].filter(Boolean);
 
       // ASCII Renderer
       class AsciiRenderer {
@@ -157,33 +440,10 @@
           this.rows = 0;
           this.cell = measureCell(this.fontSize);
           this.baseCellWidth = this.cell.w;
-          this.cardPlacement = null;
           this.field = new Float32Array(0);
           this.resize();
         }
-        buildCardCanvas(dpr) {
-          const canvas = document.createElement('canvas');
-          canvas.width = Math.ceil(CARD.width * this.cell.w * dpr);
-          canvas.height = Math.ceil(CARD.height * this.cell.h * dpr);
-          const ctx = canvas.getContext('2d');
-          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-          ctx.font = `${this.fontSize}px "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace`;
-          ctx.textBaseline = 'top';
-          ctx.textAlign = 'center';
-          ctx.fillStyle = '#d0f8d0';
-          for (let y = 0; y < CARD.height; y++) {
-            for (let x = 0; x < CARD.width; x++) {
-              ctx.fillText(CARD.lines[y][x], (x + 0.5) * this.cell.w, y * this.cell.h);
-            }
-          }
-          this.cardCanvas = canvas;
-        }
 
-        setFontSize(px) {
-          this.fontSize = px;
-          this.cell = measureCell(px);
-          this.resize();
-        }
 
         resize() {
           const W = window.innerWidth;
@@ -208,7 +468,6 @@
           this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
           this.ctx.font = `${newFontSize}px "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace`;
           this.ctx.textBaseline = 'top';
-          this.buildCardCanvas(dpr);
         }
 
         renderFromScalar(field, cols, rows, charset, color, options = {}) {
@@ -219,28 +478,17 @@
           const invert = options.invert ?? false;
           const useDither = !!options.dither;
           const matrix = useDither ? BAYER4 : null;
-          const card = CARD;
-          const cardFits = (options.overlayCard ?? true) && card.width <= cols && card.height <= rows;
-          const cardStartX = cardFits ? Math.floor((cols - card.width) / 2) : 0;
-          const cardStartY = cardFits ? Math.floor((rows - card.height) / 2) : 0;
-          this.cardPlacement = cardFits ? { startX: cardStartX, startY: cardStartY, width: card.width, height: card.height } : null;
-          this.hasVisiblePixels = false;
           const ctx = this.ctx;
           const cell = this.cell;
           ctx.fillStyle = '#000';
           ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
           ctx.fillStyle = color ?? '#d0f8d0';
+          this.hasVisiblePixels = false;
 
           for (let y = 0; y < rows; y++) {
             const offset = y * cols;
-            const cardY = y - cardStartY;
             let line = '';
             for (let x = 0; x < cols; x++) {
-              const cardX = x - cardStartX;
-              if (cardFits && cardY >= 0 && cardY < card.height && cardX >= 0 && cardX < card.width) {
-                line += ' ';
-                continue;
-              }
               let v = field[offset + x] * contrast + bias;
               if (v < 0) v = 0;
               else if (v > 1) v = 1;
@@ -259,16 +507,6 @@
             }
             ctx.fillText(line, 0, y * cell.h);
           }
-          if (cardFits) {
-            ctx.drawImage(
-              this.cardCanvas,
-              cardStartX * cell.w,
-              cardStartY * cell.h,
-              card.width * cell.w,
-              card.height * cell.h
-            );
-          }
-          updateCardOverlayPosition(this);
         }
       }
       // Simple stable fluids solver (Stam 1999) adapted to non-square grid
@@ -404,8 +642,11 @@
 
       const DENSITY_CHARSET = ' .:-=+*#%@';
       // Tuning constants
-      const DISSIPATION = 0.994; // faster fade to avoid snowballing
-      const AUTO_MOTION_DEPOSIT_SCALE = 0.15; // less density injected during preview
+      const DISSIPATION = 0.988;
+      const AUTO_MOTION_DEPOSIT_SCALE = 0.045;
+      const POINTER_DEPOSIT_SCALE = 0.12;
+      const CLICK_BURST_DEPOSIT_SCALE = 0.12;
+      const CLICK_BURST_DURATION = 2500;
 
       // Common input state
       const input = {
@@ -413,109 +654,65 @@
         x: 0, y: 0,
         px: 0, py: 0,
         strength: 50,
+        headRadius: 1,
       };
-
-      // Mobile triple-tap detector (background only)
-      const tapHistory = [];
-      const TRIPLE_TAP_WINDOW = 500; // ms
-      const TRIPLE_TAP_RADIUS = 60; // px
-      let suppressNextClick = false;
-
-      function clientToCell(clientX, clientY) {
-        const rect = pre.getBoundingClientRect();
-        const xNorm = (clientX - rect.left) / rect.width;
-        const yNorm = (clientY - rect.top) / rect.height;
-        if (xNorm < 0 || xNorm > 1 || yNorm < 0 || yNorm > 1) return null;
-        const x = Math.floor(xNorm * renderer.cols);
-        const y = Math.floor(yNorm * renderer.rows);
-        if (x < 0 || y < 0 || x >= renderer.cols || y >= renderer.rows) return null;
-        return { x, y };
-      }
-
-      function pointOnCard(clientX, clientY) {
-        const placement = renderer.cardPlacement;
-        if (!placement) return null;
-        const cell = clientToCell(clientX, clientY);
-        if (!cell) return null;
-        const cardX = cell.x - placement.startX;
-        const cardY = cell.y - placement.startY;
-        if (cardX < 0 || cardY < 0 || cardX >= placement.width || cardY >= placement.height) return null;
-        return { cardX, cardY };
-      }
-
-      function linkAt(clientX, clientY) {
-        const hit = pointOnCard(clientX, clientY);
-        if (!hit) return null;
-        for (const link of CARD.links) {
-          if (!link) continue;
-          const matchesLine = hit.cardY === link.line || (link.underlineLine !== undefined && hit.cardY === link.underlineLine);
-          if (!matchesLine) continue;
-          if (hit.cardX >= link.start && hit.cardX < link.start + link.length) {
-            return link;
-          }
-        }
-        return null;
-      }
 
       function attachPointer(el) {
         el.addEventListener('pointerdown', (e) => {
-          // Detect triple-tap on background (touch only)
+          if (e.target.closest('.profile-card')) return;
           if (e.pointerType === 'touch') {
-            const link = linkAt(e.clientX, e.clientY);
-            const onCard = !!pointOnCard(e.clientX, e.clientY);
-            if (!link && !onCard) {
-              const now = performance.now();
-              tapHistory.push({ t: now, x: e.clientX, y: e.clientY });
-              // Keep only recent taps
-              while (tapHistory.length > 3 || (tapHistory[0] && now - tapHistory[0].t > TRIPLE_TAP_WINDOW)) {
-                tapHistory.shift();
-              }
-              if (tapHistory.length === 3) {
-                const a = tapHistory[0], b = tapHistory[1], c = tapHistory[2];
-                const withinTime = c.t - a.t <= TRIPLE_TAP_WINDOW;
-                const dist = (p, q) => Math.hypot(p.x - q.x, p.y - q.y);
-                const withinSpace = dist(a, c) <= TRIPLE_TAP_RADIUS && dist(b, c) <= TRIPLE_TAP_RADIUS;
-                if (withinTime && withinSpace) {
-                  toggleWebcamMode();
-                  tapHistory.length = 0;
-                  input.down = false;
-                  suppressNextClick = true;
-                  if (e.cancelable) e.preventDefault();
-                  return; // don't start drawing
-                }
-              }
-            }
+            if (paused) return;
+            autoMotion = [];
+            autoMotionStart = null;
+            clickBurst = { x: e.clientX, y: e.clientY, started: performance.now() };
+            input.headRadius = 0.25;
+            input.down = true;
+            input.x = input.px = e.clientX;
+            input.y = input.py = e.clientY;
+            const previousStrength = input.strength;
+            input.strength = 24;
+            injectFromPointer(AUTO_MOTION_DEPOSIT_SCALE);
+            input.strength = previousStrength;
+            input.down = false;
+            planAutoMotion(true, { x: e.clientX, y: e.clientY });
+            scheduleFrame();
+            return;
           }
           autoMotion = [];
           autoMotionStart = null;
-          const link = linkAt(e.clientX, e.clientY);
-          if (link) {
-            input.down = false;
-            return;
+          if (paused) {
+            paused = false;
+            syncMotionToggle();
           }
-          const cardHit = pointOnCard(e.clientX, e.clientY);
-          input.down = !cardHit;
-          input.x = e.clientX; input.y = e.clientY; input.px = input.x; input.py = input.y;
-          // On touch devices, stop default scrolling/gestures when drawing on the background
+          input.headRadius = 0.25;
+          clickBurst = { x: e.clientX, y: e.clientY, started: performance.now() };
+          input.strength = 18;
+          input.down = true;
+          input.x = e.clientX;
+          input.y = e.clientY;
+          input.px = input.x;
+          input.py = input.y;
           scheduleFrame();
-          if (input.down && e.cancelable) e.preventDefault();
         });
-        window.addEventListener('pointerup', () => input.down = false);
-        window.addEventListener('pointermove', (e) => { input.x = e.clientX; input.y = e.clientY; });
-        // Ensure touch-drag doesn't scroll while drawing
-        el.addEventListener('pointermove', (e) => {
-          if (input.down && e.cancelable) e.preventDefault();
-        }, { passive: false });
-        el.addEventListener('wheel', (e) => {
-          input.strength = Math.max(5, Math.min(300, input.strength + (e.deltaY > 0 ? -5 : 5)));
-          e.preventDefault();
-        }, { passive: false });
+        window.addEventListener('pointerup', () => {
+          if (!input.down) return;
+          input.down = false;
+          input.strength = 50;
+          if (!paused) {
+            planAutoMotion(true, { x: input.x, y: input.y });
+            scheduleFrame();
+          }
+        });
+        window.addEventListener('pointermove', (e) => {
+          input.x = e.clientX;
+          input.y = e.clientY;
+        });
       }
 
       // Single effect definition
       const effect = {
         background: '#000',
-        color: '#d0f8d0',
+        color: '#a5ff9f',
         update(t, dt) {
           const N = fluid.nx, M = fluid.ny;
           const cx = N * 0.5, cy = M * 0.5;
@@ -560,111 +757,24 @@
 
       const pre = document.getElementById('ascii');
       const renderer = new AsciiRenderer(pre);
-      const cardOverlay = document.getElementById('cardOverlay');
-      let cardOverlayName = null;
-      const cardOverlayAnchors = [];
-      if (cardOverlay) {
-        cardOverlay.innerHTML = '';
-        if (CARD_NAME) {
-          cardOverlayName = document.createElement('span');
-          cardOverlayName.textContent = CARD_NAME.text;
-          cardOverlayName.style.position = 'absolute';
-          cardOverlayName.style.fontWeight = '700';
-          cardOverlayName.style.pointerEvents = 'none';
-          cardOverlay.appendChild(cardOverlayName);
-        }
-        CARD.links.forEach((link) => {
-          const a = document.createElement('a');
-          a.href = link.url;
-          a.textContent = link.text;
-          a.target = '_blank';
-          a.rel = 'noopener';
-          a.dataset.link = link.text.toLowerCase();
-          cardOverlay.appendChild(a);
-          link.anchor = a;
-          cardOverlayAnchors.push({ link, el: a });
-        });
-      }
 
       let fluid = new Fluid(Math.max(8, Math.ceil(renderer.cols / 2)), Math.max(8, Math.ceil(renderer.rows / 2)), 0.00005, 0.00005, 8);
       const appEl = document.getElementById('app');
       appEl.style.background = effect.background;
       attachPointer(appEl);
 
-      function updateCardOverlayPosition(rendererInstance) {
-        if (!cardOverlay) return;
-        const placement = rendererInstance.cardPlacement;
-        const cell = rendererInstance.cell;
-        if (!placement) {
-          cardOverlay.style.display = 'none';
-          return;
-        }
-        cardOverlay.style.display = 'block';
-        cardOverlay.style.left = `${placement.startX * cell.w}px`;
-        cardOverlay.style.top = `${placement.startY * cell.h}px`;
-        cardOverlay.style.width = `${placement.width * cell.w}px`;
-        cardOverlay.style.height = `${placement.height * cell.h}px`;
-        cardOverlay.style.fontSize = `${rendererInstance.fontSize}px`;
-        cardOverlay.style.lineHeight = `${cell.h}px`;
-        if (cardOverlayName && CARD_NAME) {
-          cardOverlayName.style.left = `${CARD_NAME.start * cell.w}px`;
-          cardOverlayName.style.top = `${CARD_NAME.line * cell.h}px`;
-          cardOverlayName.style.width = `${CARD_NAME.length * cell.w}px`;
-          cardOverlayName.style.height = `${cell.h}px`;
-          cardOverlayName.style.lineHeight = `${cell.h}px`;
-        }
-        cardOverlayAnchors.forEach(({ link, el }) => {
-          el.style.left = `${link.start * cell.w}px`;
-          el.style.top = `${link.line * cell.h}px`;
-          el.style.width = `${link.length * cell.w}px`;
-          el.style.height = `${cell.h}px`;
-          el.style.lineHeight = `${cell.h}px`;
-        });
-      }
 
       function resizeAll() {
         const oldCols = renderer.cols, oldRows = renderer.rows;
         renderer.resize();
         if (oldCols !== renderer.cols || oldRows !== renderer.rows) {
           fluid.setSize(Math.max(8, Math.ceil(renderer.cols / 2)), Math.max(8, Math.ceil(renderer.rows / 2)));
-          effect.maxDensity = 0;
         }
-        updateCardOverlayPosition(renderer);
         planAutoMotion();
         scheduleFrame();
       }
       window.addEventListener('resize', () => resizeAll());
 
-      appEl.addEventListener('mousemove', (e) => {
-        const link = linkAt(e.clientX, e.clientY);
-        const cursor = link ? 'pointer' : pointOnCard(e.clientX, e.clientY) ? 'default' : 'crosshair';
-        if (appEl.style.cursor !== cursor) appEl.style.cursor = cursor;
-      });
-      appEl.addEventListener('mouseleave', () => {
-        if (appEl.style.cursor !== 'crosshair') appEl.style.cursor = 'crosshair';
-      });
-
-      appEl.addEventListener('click', (e) => {
-        if (suppressNextClick) {
-          suppressNextClick = false;
-          e.preventDefault();
-          return;
-        }
-        if (e.target && e.target.closest && e.target.closest('#cardOverlay')) {
-          return;
-        }
-        const link = linkAt(e.clientX, e.clientY);
-        const onCard = !!pointOnCard(e.clientX, e.clientY);
-        // Desktop triple-click on background toggles webcam mode
-        if (e.detail >= 3 && !link && !onCard) {
-          toggleWebcamMode();
-          e.preventDefault();
-          return;
-        }
-        if (!link) return;
-        window.open(link.url, '_blank', 'noopener');
-        e.preventDefault();
-      });
 
       function injectFromPointer(depositScale = 1) {
         if (!input.down) return;
@@ -675,31 +785,172 @@
         const velocityScale = renderer.cols / fluid.nx;
         const vx = (gx - pgx) * (input.strength / 40) * velocityScale;
         const vy = (gy - pgy) * (input.strength / 40) * velocityScale;
-        for (let ry = -1; ry <= 1; ry++) {
-          for (let rx = -1; rx <= 1; rx++) {
+        const radius = Math.max(0.25, input.headRadius);
+        const extent = Math.ceil(radius);
+        for (let ry = -extent; ry <= extent; ry++) {
+          for (let rx = -extent; rx <= extent; rx++) {
+            const distance = Math.hypot(rx, ry);
+            if (distance > radius + 0.5) continue;
             const x = gx + rx, y = gy + ry;
-            const base = (rx === 0 && ry === 0 ? 0.5 : 0.2);
+            const falloff = Math.max(0.12, 1 - 0.68 * distance / (radius + 0.5));
+            const base = (rx === 0 && ry === 0 ? 0.5 : 0.2) * falloff;
             fluid.addDensity(x, y, input.strength * base * depositScale);
-            fluid.addVelocity(x, y, vx, vy);
+            fluid.addVelocity(x, y, vx * falloff, vy * falloff);
           }
         }
         input.px = input.x; input.py = input.y;
       }
 
-      let paused = false;
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+      let paused = reducedMotion.matches;
       let last = performance.now();
       let animationFrameId = 0;
+      const FRAME_INTERVAL_MS = 1000 / 30;
+      let lastFrameAt = 0;
       let autoMotion = [];
       let autoMotionStart = null;
-      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-      window.addEventListener('keydown', (e) => {
-        if (e.code === 'Space') {
-          paused = !paused;
-          if (!paused) scheduleFrame();
-          e.preventDefault();
-        } else if (e.key === 'c' || e.key === 'C') {
-          toggleWebcamMode();
-          e.preventDefault();
+      let autoMotionHeadPhase = 0;
+      let clickBurst = null;
+      const motionToggle = document.getElementById('motion-toggle');
+
+      let language = 'en';
+      const languageToggle = document.getElementById('language-toggle');
+      const languageCopy = {
+        en: {
+          name: 'Yuri Shubin',
+          photoAlt: 'Portrait of Yuri Shubin',
+          actionsLabel: 'Contact actions',
+          brand: 'Technology · AI Products',
+          role: 'Technology entrepreneur & venture builder',
+          intro: 'Digitalization of complex manufacturing processes.',
+          email: 'Email',
+          telegram: 'Telegram',
+          contact: 'Save contact',
+          share: 'Share contact',
+          selected: 'Selected product · Digital Atom',
+          description: 'A scenario-based simulator for communications teams to practise media and crisis response.',
+          proof: 'Publication · 2022 ↗',
+          nav: 'Professional profiles',
+          copied: 'Contact-card link copied.',
+          noShare: 'Sharing is unavailable. Copy the contact-card link from the address bar.',
+          shareFailed: 'Could not open sharing. Copy the contact-card link from the address bar.',
+          title: 'Yuri Shubin — Technology & AI Products',
+          descriptionMeta: 'Yuri Shubin — technology entrepreneur focused on digitalization of complex manufacturing processes. Selected work and contact details.',
+          ogLocale: 'en_US',
+          ogDescription: 'Technology entrepreneur focused on digitalization of complex manufacturing processes.',
+          ogImageAlt: 'Yuri Shubin — technology and AI products profile card',
+          shareTitle: 'Yuri Shubin — contact card',
+          shareText: 'Contact card for Yuri Shubin.',
+        },
+        ru: {
+          brand: 'Технологии · ИИ продукты',
+          name: 'Юрий Шубин',
+          photoAlt: 'Портрет Юрия Шубина',
+          actionsLabel: 'Контакты',
+          role: 'Технологический предприниматель',
+          intro: 'Цифровизация сложных производственных процессов.',
+          email: 'Email',
+          telegram: 'Telegram',
+          contact: 'В контакты',
+          share: 'Поделиться контактом',
+          selected: 'Избранный продукт · Digital Atom',
+          description: 'Симулятор для PR-команд: отработка работы с новостными и кризисными ситуациями.',
+          proof: 'Публикация · 2022 ↗',
+          nav: 'Профессиональные профили',
+          copied: 'Ссылка на контактную карточку скопирована.',
+          noShare: 'Поделиться не удалось. Скопируйте ссылку на контактную карточку.',
+          shareFailed: 'Не удалось открыть меню «Поделиться». Скопируйте ссылку на контактную карточку.',
+          title: 'Юрий Шубин — Технологии и ИИ продукты',
+          descriptionMeta: 'Юрий Шубин — технологический предприниматель. Цифровизация сложных производственных процессов. Контакты и избранная работа.',
+          ogLocale: 'ru_RU',
+          ogDescription: 'Юрий Шубин — технологический предприниматель. Цифровизация сложных производственных процессов.',
+          ogImageAlt: 'Профиль Юрия Шубина — технологии и ИИ продукты',
+          shareTitle: 'Контактная карточка Юрия Шубина',
+          shareText: 'Контакты Юрия Шубина.',
+        },
+      };
+
+      function syncMotionToggle() {
+        motionToggle.textContent = paused
+          ? (language === 'ru' ? 'Включить анимацию' : 'Enable background animation')
+          : (language === 'ru' ? 'Остановить анимацию' : 'Pause background animation');
+        motionToggle.setAttribute('aria-pressed', String(!paused));
+      }
+
+      function setLanguage(nextLanguage) {
+        language = nextLanguage;
+        document.documentElement.lang = language;
+        const copy = languageCopy[language];
+        document.getElementById('brand-eyebrow').textContent = copy.brand;
+        document.getElementById('profile-name').textContent = copy.name;
+        document.getElementById('profile-photo').alt = copy.photoAlt;
+        document.getElementById('profile-role').textContent = copy.role;
+        document.getElementById('profile-intro').textContent = copy.intro;
+        document.getElementById('contact-actions').setAttribute('aria-label', copy.actionsLabel);
+        document.getElementById('email-action-label').textContent = copy.email;
+        document.getElementById('telegram-action-label').textContent = copy.telegram;
+        document.getElementById('contact-action-label').textContent = copy.contact;
+        document.getElementById('share-contact-label').textContent = copy.share;
+        document.getElementById('featured-eyebrow').textContent = copy.selected;
+        document.getElementById('featured-description').textContent = copy.description;
+        document.getElementById('proof-link').textContent = copy.proof;
+        document.getElementById('profile-nav').setAttribute('aria-label', copy.nav);
+        languageToggle.textContent = language === 'en' ? 'RU' : 'EN';
+        languageToggle.setAttribute('aria-label', language === 'en' ? 'Switch to Russian' : 'Переключить на английский');
+        document.title = copy.title;
+        document.querySelector('meta[name="description"]').content = copy.descriptionMeta;
+        document.querySelector('meta[property="og:title"]').content = copy.title;
+        document.querySelector('meta[property="og:description"]').content = copy.ogDescription;
+        document.querySelector('meta[name="twitter:title"]').content = copy.title;
+        document.querySelector('meta[name="twitter:description"]').content = copy.ogDescription;
+        document.querySelector('meta[property="og:locale"]').content = copy.ogLocale;
+        document.querySelector('meta[property="og:locale:alternate"]').content = language === 'en' ? 'ru_RU' : 'en_US';
+        document.querySelector('meta[property="og:image:alt"]').content = copy.ogImageAlt;
+        syncMotionToggle();
+      }
+
+      languageToggle.addEventListener('click', () => setLanguage(language === 'en' ? 'ru' : 'en'));
+
+      function setMotionEnabled(enabled) {
+        paused = !enabled;
+        if (enabled) planAutoMotion(true);
+        else {
+          autoMotion = [];
+          autoMotionStart = null;
+          input.down = false;
+          clickBurst = null;
+        }
+        syncMotionToggle();
+        last = performance.now();
+        scheduleFrame();
+      }
+
+      motionToggle.addEventListener('click', () => setMotionEnabled(paused));
+      reducedMotion.addEventListener('change', (event) => {
+        if (event.matches) setMotionEnabled(false);
+      });
+      const shareContactButton = document.getElementById('share-contact');
+      const shareStatus = document.getElementById('share-status');
+      const contactCardUrl = 'https://shubin.co/yuri-shubin.vcf';
+      shareContactButton.addEventListener('click', async () => {
+        const copy = languageCopy[language];
+        const data = {
+          title: copy.shareTitle,
+          text: copy.shareText,
+          url: contactCardUrl,
+        };
+        shareStatus.textContent = '';
+        try {
+          if (navigator.share) {
+            await navigator.share(data);
+          } else if (navigator.clipboard?.writeText) {
+            await navigator.clipboard.writeText(data.url);
+            shareStatus.textContent = copy.copied;
+          } else {
+            shareStatus.textContent = copy.noShare;
+          }
+        } catch (error) {
+          if (error.name !== 'AbortError') shareStatus.textContent = copy.shareFailed;
         }
       });
 
@@ -713,173 +964,125 @@
         if (document.hidden) {
           cancelAnimationFrame(animationFrameId);
           animationFrameId = 0;
-          if (webcam.active) stopWebcam();
           return;
         }
         last = performance.now();
         scheduleFrame();
       });
 
-      function planAutoMotion() {
+      function planAutoMotion(force = false, startAt = null) {
         autoMotion = [];
         autoMotionStart = null;
         input.down = false;
-        if (reducedMotion.matches) return;
+        if ((paused || reducedMotion.matches) && !force) return;
         const rect = pre.getBoundingClientRect();
         if (!rect.width || !rect.height) return;
-        const centerX = rect.left + rect.width * 0.55;
-        const centerY = rect.top + rect.height * 0.45;
-        const radius = Math.min(rect.width, rect.height) * 0.16;
-        const steps = 40;
-        const startAngle = Math.random() * Math.PI * 2;
+        const originX = rect.left + rect.width * (Math.random() < 0.5 ? 0.06 : 0.94);
+        const originY = rect.top + rect.height * (0.35 + Math.random() * 0.3);
+        const edgeX = startAt ? Math.min(startAt.x - rect.left, rect.right - startAt.x) : rect.width * 0.5;
+        const edgeY = startAt ? Math.min(startAt.y - rect.top, rect.bottom - startAt.y) : rect.height * 0.5;
+        const scaleX = 0.65 + Math.random() * 0.45;
+        const scaleY = 0.65 + Math.random() * 0.45;
+        const radiusX = Math.min(rect.width * 0.36, Math.max(18, edgeX * 0.42)) * scaleX;
+        const radiusY = Math.min(rect.height * 0.34, Math.max(18, edgeY * 0.42)) * scaleY;
+        const pathStartX = startAt?.x ?? originX;
+        const pathStartY = startAt?.y ?? originY;
+        const phaseA = Math.random() * Math.PI * 2;
+        const phaseB = Math.random() * Math.PI * 2;
+        const phaseC = Math.random() * Math.PI * 2;
+        const phaseD = Math.random() * Math.PI * 2;
+        const phaseE = Math.random() * Math.PI * 2;
+        const startX = 0.56 * Math.sin(phaseA) + 0.21 * Math.sin(phaseB) + 0.11 * Math.cos(phaseC) + 0.08 * Math.sin(phaseD) + 0.04 * Math.cos(phaseE);
+        const startY = 0.60 * Math.cos(phaseB) + 0.20 * Math.sin(phaseA) + 0.10 * Math.cos(phaseC) + 0.06 * Math.sin(phaseD) + 0.04 * Math.cos(phaseE);
+        autoMotionHeadPhase = Math.random() * Math.PI * 2;
+        const steps = 60;
         for (let i = 0; i < steps; i++) {
-          const theta = startAngle + (i / steps) * Math.PI * 2;
-          const x = centerX + Math.cos(theta) * radius;
-          const y = centerY + Math.sin(theta) * radius * 0.65;
-          autoMotion.push({ x, y });
-        }
-      }
-
-      const AUTO_MOTION_STRENGTH = 7; // halved again for extra softness
-
-      // Webcam ASCII mode state
-      const webcam = {
-        active: false,
-        stream: null,
-        video: null,
-        canvas: null,
-        ctx: null,
-      };
-
-      async function startWebcam() {
-        if (webcam.active) return true;
-        try {
-          const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' }, audio: false });
-          const video = document.createElement('video');
-          video.autoplay = true;
-          video.playsInline = true;
-          video.muted = true;
-          video.srcObject = stream;
-          // Hidden processing canvas
-          const canvas = document.createElement('canvas');
-          const ctx = canvas.getContext('2d', { willReadFrequently: true });
-          webcam.stream = stream;
-          webcam.video = video;
-          webcam.canvas = canvas;
-          webcam.ctx = ctx;
-          // Wait until we have video dimensions and can play
-          await new Promise((resolve) => {
-            if (video.readyState >= 2 && video.videoWidth) return resolve();
-            const onReady = () => {
-              video.removeEventListener('loadeddata', onReady);
-              resolve();
-            };
-            video.addEventListener('loadeddata', onReady, { once: true });
+          const theta = (i / steps) * Math.PI * 2;
+          const shapeX = 0.56 * Math.sin(theta + phaseA) + 0.21 * Math.sin(2 * theta + phaseB) + 0.11 * Math.cos(5 * theta + phaseC) + 0.08 * Math.sin(8 * theta + phaseD) + 0.04 * Math.cos(11 * theta + phaseE) - startX;
+          const shapeY = 0.60 * Math.cos(theta + phaseB) + 0.20 * Math.sin(3 * theta + phaseA) + 0.10 * Math.cos(4 * theta + phaseC) + 0.06 * Math.sin(7 * theta + phaseD) + 0.04 * Math.cos(9 * theta + phaseE) - startY;
+          const breatheX = 0.72 + 0.28 * (0.5 + 0.5 * Math.sin(2 * theta + phaseE));
+          const breatheY = 0.74 + 0.26 * (0.5 + 0.5 * Math.cos(2 * theta + phaseD));
+          autoMotion.push({
+            x: Math.max(rect.left, Math.min(rect.right, pathStartX + radiusX * breatheX * shapeX)),
+            y: Math.max(rect.top, Math.min(rect.bottom, pathStartY + radiusY * breatheY * shapeY)),
           });
-          try { await video.play(); } catch (_) {}
-          webcam.active = true;
-          return true;
-        } catch (err) {
-          console.error('Webcam error:', err);
-          webcam.active = false;
-          return false;
         }
       }
 
-      function stopWebcam() {
-        if (!webcam.active) return;
-        if (webcam.stream) {
-          for (const tr of webcam.stream.getTracks()) tr.stop();
-        }
-        webcam.stream = null;
-        webcam.video = null;
-        webcam.canvas = null;
-        webcam.ctx = null;
-        webcam.active = false;
-      }
+      const AUTO_MOTION_STRENGTH = 6;
+      const MOTION_STEP_MS = 500;
 
-      async function toggleWebcamMode() {
-        if (webcam.active) {
-          stopWebcam();
-          planAutoMotion();
-        } else {
-          // disable auto motion when switching to webcam mode
-          autoMotion = [];
-          autoMotionStart = null;
-          await startWebcam();
-        }
-        scheduleFrame();
-      }
-
-      function renderWebcamASCII() {
-        if (!webcam.active || !webcam.video || !webcam.ctx) return;
-        if (!webcam.video.videoWidth || !webcam.video.videoHeight || webcam.video.readyState < 2) return;
-        const cols = renderer.cols, rows = renderer.rows;
-        if (webcam.canvas.width !== cols || webcam.canvas.height !== rows) {
-          webcam.canvas.width = cols;
-          webcam.canvas.height = rows;
-        }
-        const ctx = webcam.ctx;
-        // Clear and mirror for selfie view
-        ctx.clearRect(0, 0, cols, rows);
-        ctx.save();
-        ctx.scale(-1, 1);
-        // Stretch to grid; minor distortion acceptable for ASCII sampling
-        ctx.drawImage(webcam.video, -cols, 0, cols, rows);
-        ctx.restore();
-        const img = ctx.getImageData(0, 0, cols, rows).data;
-        const field = renderer.field;
-        for (let y = 0; y < rows; y++) {
-          for (let x = 0; x < cols; x++) {
-            const i = (y * cols + x) * 4;
-            const r = img[i], g = img[i + 1], b = img[i + 2];
-            field[y * cols + x] = (0.2126 * r + 0.7152 * g + 0.0722 * b) / 255;
-          }
-        }
-        renderer.renderFromScalar(field, cols, rows, DENSITY_CHARSET, effect.color);
-      }
 
       function frame(t) {
         animationFrameId = 0;
+        if (t - lastFrameAt < FRAME_INTERVAL_MS) {
+          scheduleFrame();
+          return;
+        }
         const dt = Math.min(0.05, (t - last) / 1000);
         last = t;
+        lastFrameAt = t;
         if (!paused) {
-          if (webcam.active) {
-            renderWebcamASCII();
-          } else if (autoMotion.length) {
-            if (!autoMotionStart) autoMotionStart = t;
-            const elapsed = t - autoMotionStart;
-            const len = autoMotion.length;
-            // Slightly slower orbit for a calmer preview
-            const idx = Math.floor((elapsed / 40) % len);
-            const segment = autoMotion[idx];
-            const prev = autoMotion[(idx - 1 + len) % len];
+          if (autoMotion.length) {
+            if (!autoMotionStart) {
+              autoMotionStart = t;
+              input.x = autoMotion[0].x;
+              input.y = autoMotion[0].y;
+              input.px = input.x;
+              input.py = input.y;
+            }
+            let elapsed = t - autoMotionStart;
+            const cycleDuration = autoMotion.length * MOTION_STEP_MS;
+            if (elapsed >= cycleDuration) {
+              const startAt = { x: input.x, y: input.y };
+              planAutoMotion(true, startAt);
+              autoMotionStart = t;
+              elapsed = 0;
+            }
+            const cursor = elapsed / MOTION_STEP_MS;
+            const index = Math.floor(cursor) % autoMotion.length;
+            const fraction = cursor - Math.floor(cursor);
+            const segment = autoMotion[index];
+            const next = autoMotion[(index + 1) % autoMotion.length];
             input.down = true;
-            input.px = prev.x;
-            input.py = prev.y;
-            input.x = segment.x;
-            input.y = segment.y;
+            input.px = input.x;
+            input.py = input.y;
+            input.x = segment.x + (next.x - segment.x) * fraction;
+            input.y = segment.y + (next.y - segment.y) * fraction;
+            const headPulse = 0.5 + 0.5 * Math.sin((elapsed / cycleDuration) * Math.PI * 2 + autoMotionHeadPhase);
+            input.headRadius = 1.2 + 2.8 * headPulse;
             const prevStrength = input.strength;
             input.strength = AUTO_MOTION_STRENGTH;
             injectFromPointer(AUTO_MOTION_DEPOSIT_SCALE);
             input.strength = prevStrength;
-            if (elapsed >= len * 32) {
-              autoMotion = [];
-              input.down = false;
-              autoMotionStart = null;
-            }
           } else if (input.down) {
-            injectFromPointer();
+            injectFromPointer(POINTER_DEPOSIT_SCALE);
           }
-          if (!webcam.active) {
-            const seconds = t / 1000;
-            effect.update(seconds, dt);
-            fluid.step();
-            effect.render();
+          if (clickBurst) {
+            const age = t - clickBurst.started;
+            const progress = Math.min(1, age / CLICK_BURST_DURATION);
+            const savedDown = input.down;
+            const savedX = input.x, savedY = input.y;
+            const savedPX = input.px, savedPY = input.py;
+            const savedStrength = input.strength, savedRadius = input.headRadius;
+            input.down = true;
+            input.x = input.px = clickBurst.x;
+            input.y = input.py = clickBurst.y;
+            input.strength = 18;
+            input.headRadius = 0.25 + 2.6 * progress;
+            injectFromPointer(CLICK_BURST_DEPOSIT_SCALE);
+            input.down = savedDown;
+            input.x = savedX; input.y = savedY;
+            input.px = savedPX; input.py = savedPY;
+            input.strength = savedStrength; input.headRadius = savedRadius;
+            if (progress >= 1) clickBurst = null;
           }
+          effect.update(t / 1000, dt);
+          fluid.step();
+          effect.render();
         }
-        const active = webcam.active || autoMotion.length > 0 || input.down || renderer.hasVisiblePixels;
-        if (!active && !webcam.active) {
+        const active = autoMotion.length > 0 || input.down || clickBurst !== null || renderer.hasVisiblePixels;
+        if (!active) {
           fluid.d.fill(0);
           fluid.Vx.fill(0);
           fluid.Vy.fill(0);
@@ -887,9 +1090,8 @@
         if (active) scheduleFrame();
       }
 
+      setLanguage('en');
       resizeAll();
-      planAutoMotion();
-      scheduleFrame();
     </script>
   </body>
 </html>
