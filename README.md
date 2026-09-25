@@ -1,5 +1,5 @@
 # shubin-co-pages
 
-Legacy public mirror of the static profile site. The canonical source repository and custom-domain Pages deployment are being moved to <https://github.com/shubinlab/shubin.co>.
+Legacy public source mirror of the static profile site. The canonical source and active custom-domain GitHub Pages deployment are now in <https://github.com/shubinlab/shubin.co>.
 
-Live website: <https://shubin.co/>. Do not assign the custom domain to this repository; it must be attached to exactly one Pages site.
+Live website: <https://shubin.co/>. Pages is disabled for this mirror; keep the custom domain attached to exactly one repository.
